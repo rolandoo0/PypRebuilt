@@ -1,4 +1,9 @@
-import pyppeteer
+import os
+
+try:
+    import pyppeteer
+except:
+    os.system("pip3 install pyppeteer")
 import asyncio
 from pyppeteer import launch
 
