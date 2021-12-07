@@ -4,8 +4,13 @@ try:
     import pyppeteer
 except:
     os.system("pip3 install pyppeteer")
+try:
+    import pyppeteer_stealth
+except:
+    os.system("pip3 install pyppeteer_stealth")
 import asyncio
 from pyppeteer import launch
+from pyppeteer_stealth import stealth
 
 
 class PyppeteerRebuilt:
@@ -22,6 +27,14 @@ class PyppeteerRebuilt:
     async def loadPage(self, url: str):
         self.browser = await launch(self.args)
         self.page = await self.browser.newPage()
+        await self.page.goto(url)
+
+    # This function will load the page using the stealth pyppeteer plugin
+    # i.e. await main.loadPageStealth("https://www.google.com")
+    async def loadPageStealth(self, url: str):
+        self.browser = await launch(self.args)
+        self.page = await self.browser.newPage()
+        await stealth(self.page)
         await self.page.goto(url)
 
     # This function will return the html of the page
@@ -43,4 +56,4 @@ class PyppeteerRebuilt:
     # This function will return the value of a certain element on the page
     # i.e. await main.getInnerText('#search')
     async def getInnerText(self, selector: str):
-        return await self.page.evaluate("(element) => element.innerText", selector)
+        return await self.page.querySelectorEval(selector, "node => node.textContent")
