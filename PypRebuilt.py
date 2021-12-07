@@ -57,3 +57,8 @@ class PyppeteerRebuilt:
     # i.e. await main.getInnerText('#search')
     async def getInnerText(self, selector: str):
         return await self.page.querySelectorEval(selector, "node => node.textContent")
+
+    # This function screenshots the current page
+    # i.e. await main.screenshot('screenshot.png')
+    async def screenShot(self, path: str):
+        await self.page.screenshot(path)
