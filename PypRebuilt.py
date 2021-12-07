@@ -39,3 +39,8 @@ class PyppeteerRebuilt:
     # i.e. await main.executeScript('document.querySelector("#search").value = "Hello World!"')
     async def executeScript(self, script: str):
         await self.page.evaluate(script)
+
+    # This function will return the value of a certain element on the page
+    # i.e. await main.getInnerText('#search')
+    async def getInnerText(self, selector: str):
+        return await self.page.evaluate("(element) => element.innerText", selector)
